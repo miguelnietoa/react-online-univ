@@ -26,7 +26,6 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
-// core components/views for RTL layout
 
 const dashboardRoutes = [
   {
