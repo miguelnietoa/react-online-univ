@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function Copyright() {
   return (
@@ -62,6 +68,34 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
 
+  const [username, setUsername] = React.useState('');
+  const [pass, setPass] = React.useState('');
+
+  const history = useHistory();
+
+  const handleSignInClick = async (event) => {
+    event.preventDefault();
+    console.log('Click on Sign In');
+    try {
+      const response = await axios.post('/students/login', {
+        username: username,
+        password: pass,
+      });
+      if (response.data.auth) {
+        cookies.set('x-access-token', response.data.token, { path: '/' });
+        history.push('/admin/dashboard');
+        console.log('entrnaidngadgfadf');
+        //return <Redirect from="/signin" to="/admin/dashboard" />;
+      }
+      console.log(response);
+    } catch (error) {
+      // TODO: send notification
+      console.log('error');
+    }
+    setUsername('');
+    setPass('');
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -74,17 +108,23 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSignInClick}
+          >
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
+              onChange={(event) => setUsername(event.target.value)}
+              value={username}
             />
             <TextField
               variant="outlined"
@@ -96,6 +136,8 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(event) => setPass(event.target.value)}
+              value={pass}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
