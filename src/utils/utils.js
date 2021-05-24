@@ -1,11 +1,10 @@
-import React,{ useContext} from 'react';
+import React,{ useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import axios from 'axios';
-import { Context } from './utils/provider.js';
+import { Context } from './provider.js';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const [state, setState] = useContext(Context)
+  const [state] = useContext(Context)
   const { isLoggedIn } = state;
 
   if (!isLoggedIn) {
@@ -16,7 +15,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 const PublicRoute = ({ component: Component, restricted, ...rest }) => {
-  const [state, setState] = useContext(Context)
+  const [state] = useContext(Context)
   const { isLoggedIn } = state;
 
     if (restricted && isLoggedIn) {
@@ -27,4 +26,4 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
   return <Route {...rest} render={(props) => <Component {...props} />} />;
 };
 
-export default { PrivateRoute, PublicRoute };
+export { PrivateRoute, PublicRoute };

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 
-export const Context = createA
+export const Context = createContext();
 
 export const Provider = ({ children }) => {
 
