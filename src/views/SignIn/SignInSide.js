@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Context } from '../../utils/provider.js';
 
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  const [state, setState] = useContext(Context);
   const [username, setUsername] = React.useState('');
   const [pass, setPass] = React.useState('');
 
@@ -83,6 +84,7 @@ export default function SignInSide() {
       });
       if (response.data.auth) {
         cookies.set('x-access-token', response.data.token, { path: '/' });
+        setState({ ...state, isLoggedIn: true });
         history.push('/admin/dashboard');
         console.log('entrnaidngadgfadf');
         //return <Redirect from="/signin" to="/admin/dashboard" />;
