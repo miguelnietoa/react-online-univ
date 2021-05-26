@@ -11,7 +11,7 @@ import BASE_URL_API from './variables/api.js';
 import Provider from './utils/provider.js';
 import { PrivateRoute, PublicRoute } from './utils/utils.js';
 import 'assets/css/material-dashboard-react.css?v=1.9.0';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = BASE_URL_API;
 axios.defaults.headers.post['Content-Type'] = 'application/json';

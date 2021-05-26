@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Context } from '../../utils/provider.js';
+import { toast } from 'react-toastify';
 
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage:
+      'url(https://media.discordapp.net/attachments/706168495993258004/846854043363835974/student-space_illustrations_studying.png?width=840&height=473)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light'
@@ -73,6 +75,7 @@ export default function SignInSide() {
   const [pass, setPass] = React.useState('');
 
   const history = useHistory();
+  const notify = () => toast.error('¡Credenciales incorrectas!');
 
   const handleSignInClick = async (event) => {
     event.preventDefault();
@@ -82,20 +85,23 @@ export default function SignInSide() {
         username: username,
         password: pass,
       });
+      setUsername('');
+      setPass('');
       if (response.data.auth) {
         cookies.set('x-access-token', response.data.token, { path: '/' });
-        setState({ ...state, isLoggedIn: true });
+        console.log('SignInSide...');
+        console.log(response.data);
+        setState({
+          ...state,
+          isLoggedIn: true,
+          token: response.data.token,
+          user: response.data.user,
+        });
         history.push('/admin/dashboard');
-        console.log('entrnaidngadgfadf');
-        //return <Redirect from="/signin" to="/admin/dashboard" />;
       }
-      console.log(response);
     } catch (error) {
-      // TODO: send notification
-      console.log('error');
+      notify();
     }
-    setUsername('');
-    setPass('');
   };
 
   return (
