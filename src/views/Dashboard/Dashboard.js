@@ -8,8 +8,6 @@ import GradeIcon from '@material-ui/icons/Grade';
 import Poll from '@material-ui/icons/Poll';
 import DateRange from '@material-ui/icons/DateRange';
 import Update from '@material-ui/icons/Update';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import AccessTime from '@material-ui/icons/AccessTime';
 // core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -19,6 +17,7 @@ import CardHeader from 'components/Card/CardHeader.js';
 import CardIcon from 'components/Card/CardIcon.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
+import axios from 'axios';
 
 import {
   dailySalesChart,
@@ -46,6 +45,12 @@ export default function Dashboard() {
       return 'Distinguido';
     }
   };
+
+  const fetchSemestralAvg = async (studentId) => {
+    const response = await axios.get(`/enrollments/${studentId}`);
+    response.
+  }
+
   calcSubjectAccAvg(state.user.courses);
   return (
     <div>
