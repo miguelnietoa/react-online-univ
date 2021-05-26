@@ -33,7 +33,7 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const classes = useStyles();
   const [state, setState] = useContext(Context);
-  const [avgEvolution,setAvgEvolution] = useState({data: {}});
+  const [avgEvolution, setAvgEvolution] = useState({ data: {} });
 
   const getStudentStatus = () => {
     const acc_avg = state.user.acc_avg;
@@ -58,12 +58,10 @@ export default function Dashboard() {
     fetchEnrollments(state.user._id).then((enrollments) => {
       let { user } = state;
       user.enrollments = enrollments;
-      setState({...state, user });
-      
+      setState({ ...state, user });
     });
   }, []);
 
-  console.log(state);
   return (
     <div>
       <GridContainer>
@@ -146,20 +144,35 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Cursos matriculados</h4>
-              <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
-              </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={['NRC', 'Nombre de la asignatura', 'Profesor(es)', 'Créditos', 'Promedio acum.']}
-                tableData={[ // TODO: map 
+                tableHead={[
+                  'NRC',
+                  'Nombre de la asignatura',
+                  'Profesor(es)',
+                  'Créditos',
+                  'Promedio acum.',
+                ]}
+                tableData={
+                  state.user.courses.map((courseStudent) => [
+                    courseStudent.course.nrc + '',
+                    courseStudent.course.name,
+                    courseStudent.course.professor.firstname,
+                    courseStudent.course.credits + '',
+                    courseStudent.grades.reduce((a, b) => a + b) /
+                      courseStudent.grades.length +
+                      '',
+                  ])
+
+                  /* [ // TODO: map 
                   ['1', 'Dakota Rice', '$36,738', 'Niger'],
                   ['2', 'Minerva Hooper', '$23,789', 'Curaçao'],
                   ['3', 'Sage Rodriguez', '$56,142', 'Netherlands'],
                   ['4', 'Philip Chaney', '$38,735', 'Korea, South'],
-                ]}
+                ] */
+                }
               />
             </CardBody>
           </Card>

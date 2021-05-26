@@ -179,7 +179,6 @@ const calcSubjectAccAvg = (courses) => {
 };
 
 const calcAvgEvolution = (enrollments) => {
-  console.log(enrollments);
   avgEvolution.data.labels = Array.from(
     enrollments,
     (enrollment) => enrollment.semester
@@ -187,7 +186,6 @@ const calcAvgEvolution = (enrollments) => {
   avgEvolution.data.series = [
     Array.from(enrollments, (enrollment) => enrollment.finalGrade),
   ];
-  console.log(avgEvolution.data.series)
   return avgEvolution;
 };
 
