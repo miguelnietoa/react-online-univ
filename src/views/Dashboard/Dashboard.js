@@ -33,7 +33,7 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const classes = useStyles();
   const [state, setState] = useContext(Context);
-  const [avgEvolution,setAvgEvolution] = useState({});
+  const [avgEvolution,setAvgEvolution] = useState({data: {}});
 
   const getStudentStatus = () => {
     const acc_avg = state.user.acc_avg;
@@ -63,9 +63,6 @@ export default function Dashboard() {
     });
   }, []);
 
-  useEffect(() => {
-    
-  }, [state])
 
   return (
     <div>
