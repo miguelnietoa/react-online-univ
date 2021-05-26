@@ -63,7 +63,7 @@ export default function Dashboard() {
     });
   }, []);
 
-
+  console.log(state);
   return (
     <div>
       <GridContainer>
@@ -153,8 +153,8 @@ export default function Dashboard() {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={['ID', 'Name', 'Salary', 'Country']}
-                tableData={[
+                tableHead={['NRC', 'Nombre de la asignatura', 'Profesor(es)', 'Créditos', 'Promedio acum.']}
+                tableData={[ // TODO: map 
                   ['1', 'Dakota Rice', '$36,738', 'Niger'],
                   ['2', 'Minerva Hooper', '$23,789', 'Curaçao'],
                   ['3', 'Sage Rodriguez', '$56,142', 'Netherlands'],
