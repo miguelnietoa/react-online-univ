@@ -155,24 +155,15 @@ export default function Dashboard() {
                   'Créditos',
                   'Promedio acum.',
                 ]}
-                tableData={
-                  state.user.courses.map((courseStudent) => [
-                    courseStudent.course.nrc + '',
-                    courseStudent.course.name,
-                    courseStudent.course.professor.firstname,
-                    courseStudent.course.credits + '',
-                    courseStudent.grades.reduce((a, b) => a + b) /
-                      courseStudent.grades.length +
-                      '',
-                  ])
-
-                  /* [ // TODO: map 
-                  ['1', 'Dakota Rice', '$36,738', 'Niger'],
-                  ['2', 'Minerva Hooper', '$23,789', 'Curaçao'],
-                  ['3', 'Sage Rodriguez', '$56,142', 'Netherlands'],
-                  ['4', 'Philip Chaney', '$38,735', 'Korea, South'],
-                ] */
-                }
+                tableData={state.user.courses.map((courseStudent) => [
+                  courseStudent.course.nrc + '',
+                  courseStudent.course.name,
+                  courseStudent.course.professor.firstname,
+                  courseStudent.course.credits + '',
+                  courseStudent.grades.reduce((a, b) => a + b) /
+                    courseStudent.grades.length +
+                    '',
+                ])}
               />
             </CardBody>
           </Card>
