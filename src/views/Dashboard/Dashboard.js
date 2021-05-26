@@ -1,41 +1,55 @@
-import React from "react";
+import React, { useContext, useEffect } from 'react';
 // react plugin for creating charts
-import ChartistGraph from "react-chartist";
+import ChartistGraph from 'react-chartist';
 // @material-ui/core
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 // @material-ui/icons
 import GradeIcon from '@material-ui/icons/Grade';
 import Poll from '@material-ui/icons/Poll';
-import DateRange from "@material-ui/icons/DateRange";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
+import DateRange from '@material-ui/icons/DateRange';
+import Update from '@material-ui/icons/Update';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import AccessTime from '@material-ui/icons/AccessTime';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardIcon from "components/Card/CardIcon.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Table from 'components/Table/Table.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardIcon from 'components/Card/CardIcon.js';
+import CardBody from 'components/Card/CardBody.js';
+import CardFooter from 'components/Card/CardFooter.js';
 
 import {
   dailySalesChart,
-  emailsSubscriptionChart
-} from "variables/charts.js";
+  subjectAccAvg,
+  calcSubjectAccAvg,
+} from 'variables/charts.js';
 
-import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import { Context } from 'utils/provider.js';
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [state, setState] = useContext(Context);
+
+  const getStudentStatus = () => {
+    console.log(state);
+    const acc_avg = state.user.acc_avg;
+    if (acc_avg <= 3.24) {
+      return 'Periodo de prueba';
+    } else if (acc_avg < 3.95) {
+      return 'Normal';
+    } else {
+      return 'Distinguido';
+    }
+  };
+  calcSubjectAccAvg(state.user.courses);
   return (
     <div>
       <GridContainer>
-        
         <GridItem xs={12} sm={6}>
           <Card>
             <CardHeader color="info" stats icon>
@@ -43,12 +57,12 @@ export default function Dashboard() {
                 <GradeIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Estado</p>
-              <h3 className={classes.cardTitle}>Distinguido</h3>
+              <h3 className={classes.cardTitle}>{getStudentStatus()}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
                 <Update />
-                Just Updated
+                Hasta Semestre 2020-30
               </div>
             </CardFooter>
           </Card>
@@ -60,12 +74,12 @@ export default function Dashboard() {
                 <Poll />
               </CardIcon>
               <p className={classes.cardCategory}>Prom. acum.</p>
-              <h3 className={classes.cardTitle}>4.90</h3>
+              <h3 className={classes.cardTitle}>{state.user.acc_avg}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-                Last 24 Hours
+                Hasta Semestre 2020-30
               </div>
             </CardFooter>
           </Card>
@@ -84,19 +98,10 @@ export default function Dashboard() {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Evolución de promedio semestral</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
-              </p>
+              <h4 className={classes.cardTitle}>
+                Evolución del promedio semestral
+              </h4>
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
-              </div>
-            </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6}>
@@ -104,27 +109,22 @@ export default function Dashboard() {
             <CardHeader color="warning">
               <ChartistGraph
                 className="ct-chart"
-                data={emailsSubscriptionChart.data}
+                data={subjectAccAvg.data}
                 type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}
+                options={subjectAccAvg.options}
+                responsiveOptions={subjectAccAvg.responsiveOptions}
+                listener={subjectAccAvg.animation}
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Promedio acumulado por materia</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+              <h4 className={classes.cardTitle}>
+                Promedio acumulado por materia
+              </h4>
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        
         <GridItem xs={12}>
           <Card>
             <CardHeader color="primary">
@@ -136,12 +136,12 @@ export default function Dashboard() {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["ID", "Name", "Salary", "Country"]}
+                tableHead={['ID', 'Name', 'Salary', 'Country']}
                 tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                  ['1', 'Dakota Rice', '$36,738', 'Niger'],
+                  ['2', 'Minerva Hooper', '$23,789', 'Curaçao'],
+                  ['3', 'Sage Rodriguez', '$56,142', 'Netherlands'],
+                  ['4', 'Philip Chaney', '$38,735', 'Korea, South'],
                 ]}
               />
             </CardBody>

@@ -27,9 +27,12 @@ export const Provider = ({ children }) => {
           },
         })
         .then((response) => {
-          console.log('PROV');
-          console.log(response);
-          setState({ ...state, isLoggedIn: true, token, user: response.data.user });
+          setState({
+            ...state,
+            isLoggedIn: true,
+            token,
+            user: response.data.user,
+          });
         })
         .catch((err) => {
           console.log(err);

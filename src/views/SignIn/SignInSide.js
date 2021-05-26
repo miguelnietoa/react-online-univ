@@ -79,7 +79,6 @@ export default function SignInSide() {
 
   const handleSignInClick = async (event) => {
     event.preventDefault();
-    console.log('Click on Sign In');
     try {
       const response = await axios.post('/students/login', {
         username: username,
@@ -89,8 +88,6 @@ export default function SignInSide() {
       setPass('');
       if (response.data.auth) {
         cookies.set('x-access-token', response.data.token, { path: '/' });
-        console.log('SignInSide...');
-        console.log(response.data);
         setState({
           ...state,
           isLoggedIn: true,
