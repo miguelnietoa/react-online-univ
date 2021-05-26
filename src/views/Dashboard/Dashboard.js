@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // react plugin for creating charts
 import ChartistGraph from 'react-chartist';
 // @material-ui/core
@@ -20,7 +20,6 @@ import CardFooter from 'components/Card/CardFooter.js';
 import axios from 'axios';
 
 import {
-  avgEvolution,
   subjectAccAvg,
   calcSubjectAccAvg,
   calcAvgEvolution,
@@ -34,6 +33,7 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const classes = useStyles();
   const [state, setState] = useContext(Context);
+  const [avgEvolution,setAvgEvolution] = useState({});
 
   const getStudentStatus = () => {
     const acc_avg = state.user.acc_avg;
@@ -48,6 +48,7 @@ export default function Dashboard() {
 
   const fetchEnrollments = async (studentId) => {
     const response = await axios.get(`/enrollments/${studentId}`);
+    setAvgEvolution(calcAvgEvolution(response.data));
     return response.data;
   };
 

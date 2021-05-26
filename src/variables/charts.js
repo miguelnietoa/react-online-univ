@@ -1,6 +1,3 @@
-// ##############################
-// // // javascript library for creating charts
-// #############################
 var Chartist = require('chartist');
 
 // ##############################
@@ -191,10 +188,10 @@ const calcAvgEvolution = (enrollments) => {
     Array.from(enrollments, (enrollment) => enrollment.finalGrade),
   ];
   console.log(avgEvolution.data.series)
+  return avgEvolution;
 };
 
 module.exports = {
-  avgEvolution,
   subjectAccAvg,
   completedTasksChart,
   calcSubjectAccAvg,
