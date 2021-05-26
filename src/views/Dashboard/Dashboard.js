@@ -20,9 +20,10 @@ import CardFooter from 'components/Card/CardFooter.js';
 import axios from 'axios';
 
 import {
-  dailySalesChart,
+  avgEvolution,
   subjectAccAvg,
   calcSubjectAccAvg,
+  calcAvgEvolution,
 } from 'variables/charts.js';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
@@ -35,7 +36,6 @@ export default function Dashboard() {
   const [state, setState] = useContext(Context);
 
   const getStudentStatus = () => {
-    console.log(state);
     const acc_avg = state.user.acc_avg;
     if (acc_avg <= 3.24) {
       return 'Periodo de prueba';
@@ -46,12 +46,26 @@ export default function Dashboard() {
     }
   };
 
-  const fetchSemestralAvg = async (studentId) => {
+  const fetchEnrollments = async (studentId) => {
     const response = await axios.get(`/enrollments/${studentId}`);
-    response.
-  }
+    return response.data;
+  };
 
   calcSubjectAccAvg(state.user.courses);
+
+  useEffect(() => {
+    fetchEnrollments(state.user._id).then((enrollments) => {
+      let { user } = state;
+      user.enrollments = enrollments;
+      setState({...state, user });
+      
+    });
+  }, []);
+
+  useEffect(() => {
+    
+  }, [state])
+
   return (
     <div>
       <GridContainer>
@@ -96,10 +110,10 @@ export default function Dashboard() {
             <CardHeader color="success">
               <ChartistGraph
                 className="ct-chart"
-                data={dailySalesChart.data}
+                data={avgEvolution.data}
                 type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
+                options={avgEvolution.options}
+                listener={avgEvolution.animation}
               />
             </CardHeader>
             <CardBody>

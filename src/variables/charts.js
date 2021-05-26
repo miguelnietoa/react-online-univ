@@ -15,17 +15,17 @@ var delays2 = 80,
 // // // Daily Sales
 // #############################
 
-const dailySalesChart = {
+const avgEvolution = {
   data: {
-    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-    series: [[12, 17, 7, 17, 23, 18, 38]],
+    labels: [],
+    series: [[]],
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0,
     }),
     low: 0,
-    high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: 6,
     chartPadding: {
       top: 0,
       right: 0,
@@ -181,13 +181,22 @@ const calcSubjectAccAvg = (courses) => {
   ];
 };
 
-const calcAvgEvolution = (courses) => {
-  
+const calcAvgEvolution = (enrollments) => {
+  console.log(enrollments);
+  avgEvolution.data.labels = Array.from(
+    enrollments,
+    (enrollment) => enrollment.semester
+  );
+  avgEvolution.data.series = [
+    Array.from(enrollments, (enrollment) => enrollment.finalGrade),
+  ];
+  console.log(avgEvolution.data.series)
 };
 
 module.exports = {
-  dailySalesChart,
+  avgEvolution,
   subjectAccAvg,
   completedTasksChart,
   calcSubjectAccAvg,
+  calcAvgEvolution,
 };
