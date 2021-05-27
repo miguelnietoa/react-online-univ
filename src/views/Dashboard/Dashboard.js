@@ -21,6 +21,7 @@ import axios from 'axios';
 
 import {
   subjectAccAvg,
+  avgEvolution as avgEvolutionInitial,
   calcSubjectAccAvg,
   calcAvgEvolution,
 } from 'variables/charts.js';
@@ -33,7 +34,7 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const classes = useStyles();
   const [state, setState] = useContext(Context);
-  const [avgEvolution, setAvgEvolution] = useState({ data: {} });
+  const [avgEvolution, setAvgEvolution] = useState(avgEvolutionInitial);
 
   const getStudentStatus = () => {
     const acc_avg = state.user.acc_avg;
@@ -160,9 +161,11 @@ export default function Dashboard() {
                   courseStudent.course.name,
                   courseStudent.course.professor.firstname,
                   courseStudent.course.credits + '',
-                  courseStudent.grades.reduce((a, b) => a + b) /
-                    courseStudent.grades.length +
-                    '',
+                  courseStudent.grades === 0
+                    ? '0'
+                    : courseStudent.grades.reduce((a, b) => a + b) /
+                        courseStudent.grades.length +
+                      '',
                 ])}
               />
             </CardBody>

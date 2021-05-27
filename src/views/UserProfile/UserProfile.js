@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 // core components
@@ -48,7 +48,7 @@ export default function UserProfile() {
   const notifySuccess = () =>
     toast.success('¡Perfil actualizado correctamente!');
   const notifyError = () => toast.error('Algo ha salido mal...');
-
+  console.log(state)
   const handleUpdateProfile = async () => {
     const newProfile = {
       username,
@@ -73,7 +73,6 @@ export default function UserProfile() {
         },
       });
       if (response.data.success) {
-        console.log(newProfile)
         setState({ ...state, user: { ...state.user,...newProfile } });
         notifySuccess();
       } else {
@@ -204,10 +203,10 @@ export default function UserProfile() {
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
-              <a href="#pablo" onClick={(e) => e.preventDefault()}>
+              <a href="#imgprofile" onClick={(e) => e.preventDefault()}>
                 <img
                   src={
-                    'https://pbs.twimg.com/profile_images/1349563706900942849/gFVOVxwi_400x400.jpg'
+                    state.user.img_url
                   }
                   alt="..."
                 />
@@ -215,10 +214,10 @@ export default function UserProfile() {
             </CardAvatar>
             <CardBody profile>
               <h6 className={classes.cardCategory}>ESTUDIANTE</h6>
-              <h4 className={classes.cardTitle}>Miguel Nieto Arias</h4>
+              <h4 className={classes.cardTitle}>{`${state.user.firstname} ${state.user.lastname}`}</h4>
               <p className={classes.description}>
-                Programa: Ingeniería de Sistemas Departamento de Ingeniería de
-                Sistemas Semestre: 7
+                Programa: {state.user.career.name} <br/>
+                Semestre: {state.user.enrollments.length + 1}
               </p>
             </CardBody>
           </Card>

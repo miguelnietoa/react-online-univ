@@ -172,7 +172,10 @@ const calcSubjectAccAvg = (courses) => {
     courses,
     (courseStudent) => courseStudent.course.nrc
   );
-  let average = (array) => array.reduce((a, b) => a + b) / array.length;
+  let average = (array) => {
+    if (array.length === 0) return 0;
+    return array.reduce((a, b) => a + b) / array.length;
+  };
   subjectAccAvg.data.series = [
     Array.from(courses, (courseStudent) => average(courseStudent.grades)),
   ];
@@ -191,6 +194,7 @@ const calcAvgEvolution = (enrollments) => {
 
 module.exports = {
   subjectAccAvg,
+  avgEvolution,
   completedTasksChart,
   calcSubjectAccAvg,
   calcAvgEvolution,

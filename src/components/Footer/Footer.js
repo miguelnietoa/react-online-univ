@@ -1,12 +1,12 @@
 /*eslint-disable*/
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
+import { makeStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
 // core components
-import styles from "assets/jss/material-dashboard-react/components/footerStyle.js";
+import styles from 'assets/jss/material-dashboard-react/components/footerStyle.js';
 
 const useStyles = makeStyles(styles);
 
@@ -41,15 +41,38 @@ export default function Footer(props) {
         </div>
         <p className={classes.right}>
           <span>
-            &copy; {1900 + new Date().getYear()}{" "}
+            &copy; {1900 + new Date().getYear()}{' '}
             <a
-              href="https://www.creative-tim.com?ref=mdr-footer"
+              href="https://github.com/miguelnietoa/react-online-univ"
               target="_blank"
               className={classes.a}
             >
-              Creative Tim
+              Online Univ
             </a>
-            , made with love for a better web
+            , made with ❤ by{' '}
+            <a
+              href="https://github.com/miguelnietoa/"
+              target="_blank"
+              className={classes.a}
+            >
+              @miguelnietoa
+            </a>
+            ,{' '}
+            <a
+              href="https://github.com/JhanU1/"
+              target="_blank"
+              className={classes.a}
+            >
+              @jhanu
+            </a>
+            ,{' '}
+            <a
+              href="https://github.com/reyesjd"
+              target="_blank"
+              className={classes.a}
+            >
+              @reyesjd
+            </a>
           </span>
         </p>
       </div>
