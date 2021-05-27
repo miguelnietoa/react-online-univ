@@ -162,9 +162,9 @@ export default function Dashboard() {
                   courseStudent.course.professor.firstname,
                   courseStudent.course.credits + '',
                   courseStudent.grades.length === 0
-                    ? '0'
-                    : courseStudent.grades.reduce((a, b) => a + b) /
-                        courseStudent.grades.length +
+                    ? '0.00'
+                    : (courseStudent.grades.reduce((a, b) => a + b) /
+                        courseStudent.grades.length).toFixed(2) +
                       '',
                 ])}
               />

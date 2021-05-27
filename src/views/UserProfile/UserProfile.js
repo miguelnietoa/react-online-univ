@@ -48,7 +48,7 @@ export default function UserProfile() {
   const notifySuccess = () =>
     toast.success('¡Perfil actualizado correctamente!');
   const notifyError = () => toast.error('Algo ha salido mal...');
-  console.log(state)
+  console.log(state);
   const handleUpdateProfile = async () => {
     const newProfile = {
       username,
@@ -65,7 +65,6 @@ export default function UserProfile() {
     if (isNaN(newProfile.phone)) delete newProfile.phone;
     console.log(newProfile);
 
-
     try {
       const response = await axios.put('/students', newProfile, {
         headers: {
@@ -73,7 +72,7 @@ export default function UserProfile() {
         },
       });
       if (response.data.success) {
-        setState({ ...state, user: { ...state.user,...newProfile } });
+        setState({ ...state, user: { ...state.user, ...newProfile } });
         notifySuccess();
       } else {
         notifyError();
@@ -204,19 +203,16 @@ export default function UserProfile() {
           <Card profile>
             <CardAvatar profile>
               <a href="#imgprofile" onClick={(e) => e.preventDefault()}>
-                <img
-                  src={
-                    state.user.img_url
-                  }
-                  alt="..."
-                />
+                <img src={state.user.img_url} alt="..." />
               </a>
             </CardAvatar>
             <CardBody profile>
               <h6 className={classes.cardCategory}>ESTUDIANTE</h6>
-              <h4 className={classes.cardTitle}>{`${state.user.firstname} ${state.user.lastname}`}</h4>
+              <h4
+                className={classes.cardTitle}
+              >{`${state.user.firstname} ${state.user.lastname}`}</h4>
               <p className={classes.description}>
-                Programa: {state.user.career.name} <br/>
+                Programa: {state.user.career.name} <br />
                 Semestre: {state.user.enrollments.length + 1}
               </p>
             </CardBody>
