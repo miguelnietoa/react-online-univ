@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from 'utils/provider.js';
+import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,21 +18,13 @@ import Person from '@material-ui/icons/Person';
 import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
-
+import Cookies from 'universal-cookie';
 const useStyles = makeStyles(styles);
-
+const cookies = new Cookies();
 export default function AdminNavbarLinks() {
   const classes = useStyles();
-  const [state] = useContext(Context);
-  const [openNotification, setOpenNotification] = React.useState(null);
+  const [state, setState] = useContext(Context);
   const [openProfile, setOpenProfile] = React.useState(null);
-  const handleClickNotification = (event) => {
-    if (openNotification && openNotification.contains(event.target)) {
-      setOpenNotification(null);
-    } else {
-      setOpenNotification(event.currentTarget);
-    }
-  };
   const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
@@ -39,8 +32,12 @@ export default function AdminNavbarLinks() {
       setOpenProfile(event.currentTarget);
     }
   };
+  const history = useHistory();
   const handleCloseProfile = () => {
     setOpenProfile(null);
+    cookies.remove('x-access-token', { path: '/' });
+    setState({});
+    history.push('/signin');
   };
   return (
     <div>
@@ -83,10 +80,7 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
+                    <MenuItem className={classes.dropdownItem}>
                       Profile
                     </MenuItem>
                     <Divider light />

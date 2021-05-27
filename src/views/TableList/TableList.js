@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 // core components
@@ -90,14 +90,6 @@ export default function TableList() {
     });
   });
   const [tableData, useTableData] = useState(table);
-  /* [
-      ['Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-      ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-      ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-      ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-      ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-      ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-    ] */
   console.log(state);
   return (
     <GridContainer>
