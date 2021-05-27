@@ -48,7 +48,7 @@ export default function UserProfile() {
   const notifySuccess = () =>
     toast.success('¡Perfil actualizado correctamente!');
   const notifyError = () => toast.error('Algo ha salido mal...');
-  console.log(state);
+
   const handleUpdateProfile = async () => {
     const newProfile = {
       username,
@@ -64,7 +64,7 @@ export default function UserProfile() {
     // Parsing phone to number instead of string
     if (isNaN(newProfile.phone)) delete newProfile.phone;
     console.log(newProfile);
-    console.log(newProfile['phone']);
+
 
     try {
       const response = await axios.put('/students', newProfile, {
@@ -73,8 +73,8 @@ export default function UserProfile() {
         },
       });
       if (response.data.success) {
-        setState({ ...state, user: { ...newProfile } });
-        //state.user.city = 'BAADDFlA';
+        console.log(newProfile)
+        setState({ ...state, user: { ...state.user,...newProfile } });
         notifySuccess();
       } else {
         notifyError();
