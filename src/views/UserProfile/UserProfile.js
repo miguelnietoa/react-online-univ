@@ -48,7 +48,6 @@ export default function UserProfile() {
   const notifySuccess = () =>
     toast.success('¡Perfil actualizado correctamente!');
   const notifyError = () => toast.error('Algo ha salido mal...');
-  console.log(state);
   const handleUpdateProfile = async () => {
     const newProfile = {
       username,

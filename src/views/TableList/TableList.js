@@ -44,7 +44,6 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   const classes = useStyles();
   const [state, setState] = useContext(Context);
-  console.log(state);
 
   const table = {
     head: [
@@ -90,7 +89,6 @@ export default function TableList() {
     });
   });
   const [tableData, useTableData] = useState(table);
-  console.log(state);
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
