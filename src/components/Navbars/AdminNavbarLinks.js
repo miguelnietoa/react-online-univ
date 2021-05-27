@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context } from 'utils/provider.js';
 import classNames from 'classnames';
 // @material-ui/core components
@@ -13,11 +13,7 @@ import Poppers from '@material-ui/core/Popper';
 import Divider from '@material-ui/core/Divider';
 // @material-ui/icons
 import Person from '@material-ui/icons/Person';
-import Notifications from '@material-ui/icons/Notifications';
-import Dashboard from '@material-ui/icons/Dashboard';
-import Search from '@material-ui/icons/Search';
 // core components
-import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
@@ -26,7 +22,7 @@ const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
-  const [state, setState] = useContext(Context);
+  const [state] = useContext(Context);
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = (event) => {
@@ -35,9 +31,6 @@ export default function AdminNavbarLinks() {
     } else {
       setOpenNotification(event.currentTarget);
     }
-  };
-  const handleCloseNotification = () => {
-    setOpenNotification(null);
   };
   const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
